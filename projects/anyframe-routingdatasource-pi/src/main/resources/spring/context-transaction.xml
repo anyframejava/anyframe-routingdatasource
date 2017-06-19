@@ -22,24 +22,11 @@
 
 	<tx:annotation-driven transaction-manager="txManager" />
 	
-	
 	<tx:advice id="txAdvice" transaction-manager="txManager">
 		<tx:attributes>
 			<tx:method name="*" rollback-for="Exception" propagation="REQUIRED"/>
 		</tx:attributes>
 	</tx:advice>
-	
-	<!--routingdatasource-configuration-START-->
-	<bean id="txManager2" class="org.springframework.jdbc.datasource.DataSourceTransactionManager">
-	  <property name="dataSource" ref="customDataSource"/>
-	</bean>
-	<tx:annotation-driven transaction-manager="txManager2" />
-	<tx:advice id="txAdvice2" transaction-manager="txManager2">
-		<tx:attributes>
-			<tx:method name="*" rollback-for="Exception" propagation="REQUIRED"/>
-		</tx:attributes>
-	</tx:advice>
-	<!--routingdatasource-configuration-END-->
     
 	<aop:config>
 		<aop:pointcut id="mipServiceRequiredTx" expression="execution(* *..MiPService.*(..))"/>
