@@ -1,6 +1,6 @@
 <%@ page language="java" errorPage="/sample/common/error.jsp" pageEncoding="UTF-8" contentType="text/html;charset=utf-8" %>
 <%@ include file="/sample/common/top.jsp"%>
-		<div class="location"><a href="<c:url value='/anyframe.jsp'/>">Home</a> &gt; <a href="<c:url value='/routingDataSourceMovieFinder.do?method=list'/>">RoutingDataSource 1.0.1</a></div>
+		<div class="location"><a href="<c:url value='/anyframe.jsp'/>">Home</a> &gt; <a href="<c:url value='/routingDataSourceMovieFinder.do?method=list'/>">RoutingDataSource 1.0.2</a></div>
     </div>
     <hr />
 <script type="text/javascript" src="<c:url value='/sample/javascript/CommonScript.js'/>"></script>    
@@ -35,9 +35,9 @@
                 	<th><spring:message code="movie.theater" /></th>
                     <td>
                     	<ul>
-							<li><input type="radio" name="theater" onclick="changeTheater(this);" value="ABCCinema" <c:if test="${theater == 'ABCCinema' }"> checked="checked"</c:if> />ABC Cinema</label></li>
-							<li><input type="radio" name="theater" onclick="changeTheater(this);" value="GoodMovieCinema" <c:if test="${theater == 'GoodMovieCinema' }"> checked="checked"</c:if> />Good Movie Cinema</label></li>
-							<li><input type="radio" name="theater" onclick="changeTheater(this);" value="MovieHouseCinema" <c:if test="${theater == 'MovieHouseCinema' }"> checked="checked"</c:if>/>Movie House Cinema</label></li>
+							<li><input type="radio" name="theater" onclick="changeTheater(this);" value="ABCCinema" <c:if test="${theater == 'ABCCinema' }"> checked="checked"</c:if> /><label for="cinema_no1">ABC Cinema</label></li>
+							<li><input type="radio" name="theater" onclick="changeTheater(this);" value="GoodMovieCinema" <c:if test="${theater == 'GoodMovieCinema' }"> checked="checked"</c:if> /><label for="cinema_no2">Good Movie Cinema</label></li>
+							<li><input type="radio" name="theater" onclick="changeTheater(this);" value="MovieHouseCinema" <c:if test="${theater == 'MovieHouseCinema' }"> checked="checked"</c:if>/><label for="cinema_no3">Movie House Cinema</label></li>
                         </ul>
                     </td>
                 </tr>
@@ -108,8 +108,8 @@
                 </a>                
             </div>
         </div>
-	</div>
 	</form:form>
+	</div>
     <hr />
 
 <%@ include file="/sample/common/bottom.jsp"%>

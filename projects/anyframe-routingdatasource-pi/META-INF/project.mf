@@ -3,11 +3,11 @@ anyframe.home=
 
 #=== Project Information ====
 project.name=anyframe-routingdatasource-pi
-project.home=/Users/aromy/Devel/anyframe-opensource/anyframe/trunk/routingdatasource/projects/anyframe-routingdatasource-pi
-project.version=1.0.1
+project.home=/Users/user/workspace/anyframe-routingdatasource-pi
+project.version=1.0.2
 project.type=web
 project.build=maven
-project.template.home=/Users/aromy/.anyframe/templates
+project.template.home=/Users/user/.anyframe/templates
 project.template=default
 project.daoframework=query
 package.name=org.anyframe.plugin

@@ -1,5 +1,5 @@
 /*
- * Copyright 2008-2011 the original author or authors.
+ * Copyright 2008-2012 the original author or authors.
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -15,8 +15,6 @@
  */
 package org.anyframe.plugin.routingdatasource.moviefinder.web;
 
-import java.io.File;
-import java.io.FileOutputStream;
 import java.util.Collection;
 
 import javax.inject.Inject;
@@ -30,14 +28,12 @@ import org.anyframe.plugin.routingdatasource.moviefinder.service.GenreService;
 import org.anyframe.plugin.routingdatasource.moviefinder.service.MovieService;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.util.FileCopyUtils;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.SessionAttributes;
 import org.springframework.web.bind.support.SessionStatus;
-import org.springframework.web.multipart.MultipartFile;
 
 /**
  * This MovieController class is a Controller class to provide movie crud and
@@ -75,39 +71,12 @@ public class MovieController {
 	@RequestMapping(params = "method=create")
 	public String create(
 			@RequestParam(value = "theater", defaultValue = "ABCCinema") String theater,
-			@RequestParam(value = "realPosterFile", required = false) MultipartFile posterFile,
 			@Valid Movie movie, BindingResult results, SessionStatus status,
 			Model model, HttpSession session) throws Exception {
 
 		if (results.hasErrors()) {
 			model.addAttribute("theater", theater);
 			return "routingdatasource/moviefinder/movie/form";
-		}
-
-		if (posterFile != null && !posterFile.getOriginalFilename().equals("")) {
-			String pictureName = posterFile.getOriginalFilename();
-
-			String destDir = session.getServletContext().getRealPath(
-					"/sample/images/posters/");
-
-			File dirPath = new File(destDir);
-			if (!dirPath.exists()) {
-				boolean created = dirPath.mkdirs();
-				if (!created) {
-					throw new Exception(
-							"Fail to create a directory for movie image. ["
-									+ destDir + "]");
-				}
-			}
-
-			File destination = File
-					.createTempFile("file", pictureName, dirPath);
-
-			FileCopyUtils.copy(posterFile.getInputStream(),
-					new FileOutputStream(destination));
-
-			movie.setPosterFile("sample/images/posters/"
-					+ destination.getName());
 		}
 
 		this.movieService.create(movie);

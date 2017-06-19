@@ -1,5 +1,5 @@
 /*
- * Copyright 2008-2011 the original author or authors.
+ * Copyright 2008-2012 the original author or authors.
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -21,7 +21,7 @@ import javax.inject.Named;
 import org.anyframe.pagination.Page;
 import org.anyframe.plugin.routingdatasource.domain.Movie;
 import org.anyframe.query.QueryService;
-import org.anyframe.query.dao.AbstractDao;
+import org.anyframe.query.dao.QueryServiceDaoSupport;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Repository;
 
@@ -31,7 +31,7 @@ import org.springframework.stereotype.Repository;
  * @author Youngmin Jo
  */
 @Repository("routingDataSourceMovieDao")
-public class MovieDao extends AbstractDao {
+public class MovieDao extends QueryServiceDaoSupport {
 	@Value("#{contextProperties['pageSize'] ?: 10}")
 	int pageSize;
 
@@ -46,27 +46,27 @@ public class MovieDao extends AbstractDao {
 
 	public void create(Movie movie) throws Exception {
 		movie.setMovieId("MV-" + System.currentTimeMillis());
-		create("RoutingDataSourceMovie", movie);
+		create("createRoutingDataSourceMovie", movie);
 	}
 
 	public void remove(String movieId) throws Exception {
 		Movie movie = new Movie();
 		movie.setMovieId(movieId);
-		remove("RoutingDataSourceMovie", movie);
+		remove("removeRoutingDataSourceMovie", movie);
 	}
 
 	public void update(Movie movie) throws Exception {
-		update("RoutingDataSourceMovie", movie);
+		update("updateRoutingDataSourceMovie", movie);
 	}
 
 	public Movie get(String movieId) throws Exception {
 		Movie movie = new Movie();
 		movie.setMovieId(movieId);
-		return (Movie) findByPk("RoutingDataSourceMovie", movie);
+		return (Movie) findByPk("findRoutingDataSourceMovieByPk", movie);
 	}
 
 	public Page getPagingList(Movie movie, int pageIndex) throws Exception {
-		return this.findListWithPaging("RoutingDataSourceMovie", movie, pageIndex, pageSize,
+		return this.findListWithPaging("findRoutingDataSourceMovieList", movie, pageIndex, pageSize,
 				pageUnit);
 	}
 }

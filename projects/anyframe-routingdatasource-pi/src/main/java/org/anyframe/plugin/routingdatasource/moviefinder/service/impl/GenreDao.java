@@ -1,5 +1,5 @@
 /*
- * Copyright 2008-2011 the original author or authors.
+ * Copyright 2008-2012 the original author or authors.
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -21,7 +21,7 @@ import javax.inject.Named;
 
 import org.anyframe.plugin.routingdatasource.domain.Genre;
 import org.anyframe.query.QueryService;
-import org.anyframe.query.dao.AbstractDao;
+import org.anyframe.query.dao.QueryServiceDaoSupport;
 import org.springframework.stereotype.Repository;
 
 /**
@@ -30,7 +30,7 @@ import org.springframework.stereotype.Repository;
  * @author Youngmin Jo
  */
 @Repository("routingDataSourceGenreDao")
-public class GenreDao extends AbstractDao {
+public class GenreDao extends QueryServiceDaoSupport {
 
 	@Inject
 	@Named("queryServiceRoutingDataSource")
@@ -40,7 +40,7 @@ public class GenreDao extends AbstractDao {
 
 	@SuppressWarnings("unchecked")
 	public List<Genre> getList() throws Exception {
-		return (List<Genre>) this.findList("RoutingDataSourceGenre", new Object[] {});
+		return (List<Genre>) this.findList("findRoutingDataSourceGenreList", new Object[] {});
 	}
 
 }

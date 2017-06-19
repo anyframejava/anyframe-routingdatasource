@@ -32,16 +32,16 @@ public class CustomRoutingDataSource extends AbstractRoutingDataSource {
         	</para>
         	
         	<para>
-				<programlisting language="xml"><![CDATA[  	<bean id="customDataSource" class="org.anyframe.plugin.routingdatasource.common.CustomRoutingDataSource">
-  		<property name="targetDataSources">
-  			<map key-type="java.lang.String">
-  				<entry key="ABCCinema" value-ref="ABCCinema" />
-  				<entry key="GoodMovieCinema" value-ref="GoodMovieCinema" />
-  				<entry key="MovieHouseCinema" value-ref="MovieHouseCinema" />
-  			</map>
-  		</property>
-  		<property name="defaultTargetDataSource" ref="ABCCinema" />
-  	</bean>]]></programlisting>
+				<programlisting language="xml"><![CDATA[<bean id="customDataSource" class="org.anyframe.plugin.routingdatasource.common.CustomRoutingDataSource">
+  	<property name="targetDataSources">
+  		<map key-type="java.lang.String">
+  			<entry key="ABCCinema" value-ref="ABCCinema" />
+  			<entry key="GoodMovieCinema" value-ref="GoodMovieCinema" />
+  			<entry key="MovieHouseCinema" value-ref="MovieHouseCinema" />
+  		</map>
+  	</property>
+  	<property name="defaultTargetDataSource" ref="ABCCinema" />
+</bean>]]></programlisting>
         	</para>
         	
         	<para>
@@ -50,23 +50,23 @@ public class CustomRoutingDataSource extends AbstractRoutingDataSource {
         	</para>
         	
         	<para>
-				<programlisting language="xml"><![CDATA[  	<bean id="parentDataSource" class="org.apache.commons.dbcp.BasicDataSource" abstract="true">
-  		<property name="driverClassName" value="#{contextProperties.driver}" />
-  		<property name="username" value="#{contextProperties.username}" />
-  		<property name="password" value="#{contextProperties.password}"/>
-  	</bean>
+				<programlisting language="xml"><![CDATA[<bean id="parentDataSource" class="org.apache.commons.dbcp.BasicDataSource" abstract="true">
+  	<property name="driverClassName" value="#{contextProperties.driver}" />
+  	<property name="username" value="#{contextProperties.username}" />
+  	<property name="password" value="#{contextProperties.password}"/>
+</bean>
   	
-  	<bean id="ABCCinema" parent="parentDataSource">
-  		<property name="url" value="#{contextProperties.url}" />
-  	</bean>
+<bean id="ABCCinema" parent="parentDataSource">
+	<property name="url" value="#{contextProperties.url}" />
+</bean>
   	
-  	<bean id="GoodMovieCinema" parent="parentDataSource">
-  		<property name="url" value="jdbc:hsqldb:hsql://localhost:9002/sampledb2nd" />
-  	</bean>
+<bean id="GoodMovieCinema" parent="parentDataSource">
+  	<property name="url" value="jdbc:hsqldb:hsql://localhost:9002/sampledb2nd" />
+</bean>
   	
-  	<bean id="MovieHouseCinema" parent="parentDataSource">
-  		<property name="url" value="jdbc:hsqldb:hsql://localhost:9003/sampledb3rd" />
-  	</bean>]]></programlisting>      	
+<bean id="MovieHouseCinema" parent="parentDataSource">
+  	<property name="url" value="jdbc:hsqldb:hsql://localhost:9003/sampledb3rd" />
+</bean>]]></programlisting>      	
         	</para>
         	
         	<para>
@@ -109,38 +109,35 @@ public class TheaterInfoContextHolder {
         	</para>
         	
         	<para>
-        		<programlisting language="java"><![CDATA[	@Test
-	public void testRoutindDataSource() throws Exception{
-		Movie movie = new Movie();
-		Page resultPage = movieFinder.getPagingList(movie, 1);
-		assertNotNull("page is not null", resultPage);
+        		<programlisting language="java"><![CDATA[@Test
+public void testRoutindDataSource() throws Exception{
+	Movie movie = new Movie();
+	Page resultPage = movieFinder.getPagingList(movie, 1);
+	assertNotNull("page is not null", resultPage);
 		
-		System.out.println(resultPage.getList());
+	System.out.println(resultPage.getList());
 		
+	TheaterInfoContextHolder.setTheater("GoodMovieCinema");
+	Page resultGoodMovieCinemaPage = movieFinder.getPagingList(movie, 1);
+	assertNotNull("page is not null", resultGoodMovieCinemaPage);
 		
-		TheaterInfoContextHolder.setTheater("GoodMovieCinema");
-		Page resultGoodMovieCinemaPage = movieFinder.getPagingList(movie, 1);
-		assertNotNull("page is not null", resultGoodMovieCinemaPage);
+	System.out.println(resultGoodMovieCinemaPage.getList());
+
 		
-		System.out.println(resultGoodMovieCinemaPage.getList());
+	TheaterInfoContextHolder.setTheater("MovieHouseCinema");
+	Page resultMovieHouseCinemaPage = movieFinder.getPagingList(movie, 1);
+	assertNotNull("page is not null", resultMovieHouseCinemaPage);
 		
+	System.out.println(resultGoodMovieCinemaPage.getList());
 		
-		TheaterInfoContextHolder.setTheater("MovieHouseCinema");
-		Page resultMovieHouseCinemaPage = movieFinder.getPagingList(movie, 1);
-		assertNotNull("page is not null", resultMovieHouseCinemaPage);
+	TheaterInfoContextHolder.setTheater("ABCCinema");
+	Page resultABCCinemaPage = movieFinder.getPagingList(movie, 1);
+	assertNotNull("page is not null", resultABCCinemaPage);
 		
-		System.out.println(resultGoodMovieCinemaPage.getList());
+	System.out.println(resultGoodMovieCinemaPage.getList());
 		
-		
-		TheaterInfoContextHolder.setTheater("ABCCinema");
-		Page resultABCCinemaPage = movieFinder.getPagingList(movie, 1);
-		assertNotNull("page is not null", resultABCCinemaPage);
-		
-		System.out.println(resultGoodMovieCinemaPage.getList());
-		
-		
-		TheaterInfoContextHolder.clearTheaterInfo();
-	}]]></programlisting>
+	TheaterInfoContextHolder.clearTheaterInfo();
+}]]></programlisting>
         	</para>
         	
         	<para>

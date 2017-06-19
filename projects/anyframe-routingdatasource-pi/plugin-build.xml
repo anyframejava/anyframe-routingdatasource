@@ -2,7 +2,7 @@
 <plugin name="routingdatasource" description="RoutingDataSource Plugin consists of simple code that provides basic guidelines on how to use AbstractRoutingDataSource by Spring.">
 	<groupId>org.anyframe.plugin</groupId>
 	<artifactId>anyframe-routingdatasource-pi</artifactId>
-	<version>1.0.1</version>
+	<version>1.0.2</version>
 	<dependent-plugins>
 		<dependent-plugin name="query" version="2.0.0&gt;*" />
 	</dependent-plugins>
@@ -35,8 +35,6 @@
 			</fileset>
 			<fileset dir="src/main/resources" filtered="true" packaged="false">
 				<include name="**/*routingdatasource*.xml" />
-				<include name="**/context-query.xml" />
-				<include name="**/context-transaction.xml" />
 			</fileset>
 			<fileset dir="src/test/java" filtered="true" packaged="true">
 				<include name="**/org/anyframe/plugin/routingdatasource/**/*.java" />
