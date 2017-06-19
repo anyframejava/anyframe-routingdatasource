@@ -34,7 +34,7 @@ public class TheaterInfoContextHolder {
 	}
 	
 	public static void clearTheaterInfo() {
-		ThreadLocalUtil.clear();
+		ThreadLocalUtil.clearSharedInfo();
 		ThreadLocalUtil.add("theater", null);
 	}
 }

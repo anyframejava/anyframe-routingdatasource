@@ -32,13 +32,12 @@ import org.springframework.stereotype.Repository;
  */
 @Repository("routingDataSourceMovieDao")
 public class MovieDao extends QueryServiceDaoSupport {
-	//Velocity-Support-contextProperties-START
+	
 	@Value("#{contextProperties['pageSize'] ?: 10}")
 	int pageSize;
 
 	@Value("#{contextProperties['pageUnit'] ?: 10}")
 	int pageUnit;
-	//Velocity-Support-contextProperties-END
 
 	@Inject
 	@Named("queryServiceRoutingDataSource")
@@ -48,28 +47,28 @@ public class MovieDao extends QueryServiceDaoSupport {
 
 	public void create(Movie movie) {
 		movie.setMovieId("MV-" + System.currentTimeMillis());
-		super.create("createRoutingDataSourceMovie", movie);
+		create("createRoutingDataSourceMovie", movie);
 	}
 
 	public void remove(String movieId) {
 		Movie movie = new Movie();
 		movie.setMovieId(movieId);
-		super.remove("removeRoutingDataSourceMovie", movie);
+		remove("removeRoutingDataSourceMovie", movie);
 	}
 
 	public void update(Movie movie) {
-		super.update("updateRoutingDataSourceMovie", movie);
+		update("updateRoutingDataSourceMovie", movie);
 	}
 
 	public Movie get(String movieId) {
 		Movie movie = new Movie();
 		movie.setMovieId(movieId);
-		return super.findByPk("findRoutingDataSourceMovieByPk", movie);
+		return findByPk("findRoutingDataSourceMovieByPk", movie);
 	}
 
 	public Page getPagingList(Movie movie, int pageIndex) {
-		return super.findListWithPaging("findRoutingDataSourceMovieList",
-				movie, pageIndex, pageSize, pageUnit);
+		return this.findListWithPaging("findRoutingDataSourceMovieList", movie,
+				pageIndex, pageSize, pageUnit);
 	}
-
+	
 }
